@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Artist } from 'src/app/models/artist.model';
 
 @Component({
   selector: 'app-home',
@@ -9,29 +10,33 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   searchValue: string = '';
-  artists: any;
   token: string = '';
+  user: any;
+  artists: Artist[] = new Array();
 
   constructor(private spotifyService: SpotifyService, private router: Router,  private route: ActivatedRoute) { }
   
   
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParams['token'];
-    
-    //toke expires in 3600 seconds
-    //setTimeout() will redirect to the logout page where the user can login again
+
     setTimeout(() => { 
       this.router.navigate(['/logout']);
     }, 3600000);
+
+    this.spotifyService.currentSearch.subscribe(value => this.searchValue = value);
+
+    this.spotifyService.getUserInfo(this.token).subscribe(res => { 
+      this.user = res;
+    });
+
+    this.spotifyService.artists$.subscribe(results => this.artists = results);
   }
-}
 
-// this.searchService.currentSearch.subscribe(value => this.searchValue = value);
-
-
-//search Artists
+  //search Artists
   // searchArtists() {
-  //   this._spotifyService.getAllArtists(this.searchValue).subscribe(data => {
+  //   this.spotifyService.getAllArtists(this.searchValue).subscribe(data => {
   //     this.artists = data;
-  //   })
+  //   });
   // }
+}

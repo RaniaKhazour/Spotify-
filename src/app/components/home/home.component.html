@@ -1,1 +1,19 @@
-<p>{{token}}</p>
+<h1 *ngIf="user">Hello, {{user.display_name}}!</h1>
+
+<!-- <p *ngIf="user">{{user.email}}</p> -->
+<!-- <p>{{token}}</p> -->
+<!-- <div +ngIf="user" *ngFor="let el from user">{{user.name}}</div> -->
+
+
+<section>
+    <!-- to remove from here and to insert in home component -->
+    <!-- add click to div to redirect to artist detail component -->
+    <div class="btn p-3 mx-2 my-2 rounded-md w-10/12" *ngFor="let artist of artists">
+        <p>{{artist.name}}</p>
+        <!-- fix url undefined -->
+        <img  src={{artist.images[0].url}}>
+    </div>
+
+</section>
+
+

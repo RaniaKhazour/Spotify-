@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Artist } from 'src/app/models/artist.model';
 import { SpotifyService } from 'src/app/services/spotify.service';
 
 @Component({
@@ -8,14 +9,17 @@ import { SpotifyService } from 'src/app/services/spotify.service';
 })
 export class NavComponent implements OnInit {
 
-  // searchValue: string = '';
-  // artists: any;
-  hide: boolean = false;
+  searchValue: string = '';
+  artists: Artist[] = new Array();
+  logged: boolean = false;
 
   constructor(private spotifyService: SpotifyService) { }
   
   
-  ngOnInit(): void {}  
+  ngOnInit(): void {
+    this.spotifyService.logged$.subscribe(res => this.logged = res);
+    this.spotifyService.currentSearch.subscribe(value => this.searchValue = value);
+  }  
 
   login() {
     this.spotifyService.accessToken();
@@ -23,22 +27,20 @@ export class NavComponent implements OnInit {
 
   logout() {
     this.spotifyService.logout();
+    this.artists = [];
   }
+
+  newSearch() {
+    this.spotifyService.updateSearch(this.searchValue);
+    if (this.searchValue !== '') {
+      this.spotifyService.getAllArtists(this.searchValue).subscribe(data => {
+        this.artists = data;
+        this.spotifyService.artists$.next(this.artists);
+      });
+    } else {
+      this.artists = [];
+      this.spotifyService.artists$.next(this.artists);
+    }
+  }
+
 }
-
-// searchValue: string = '';
-
-// constructor(private searchService: SearchService) { }
-
-// ngOnInit(): void {
-//   this.searchService.updateSearch(this.searchValue);
-// }  
-
-// this.searchService.currentSearch.subscribe(value => this.searchValue = value);
-
-//search Artists
-// searchArtists() {
-//   this._spotifyService.getAllArtists(this.searchValue).subscribe(data => {
-//     this.artists = data;
-//   })
-// }

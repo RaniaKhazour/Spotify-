@@ -32,11 +32,4 @@ export class HomeComponent implements OnInit {
 
     this.spotifyService.artists$.subscribe(results => this.artists = results);
   }
-
-  //search Artists
-  // searchArtists() {
-  //   this.spotifyService.getAllArtists(this.searchValue).subscribe(data => {
-  //     this.artists = data;
-  //   });
-  // }
 }

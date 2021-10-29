@@ -12,6 +12,7 @@ import { SearchService } from './services/search.service';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { DetailArtistComponent } from './components/detail-artist/detail-artist.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     FooterComponent,
     HomeComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    DetailArtistComponent
   ],
   imports: [
     BrowserModule,

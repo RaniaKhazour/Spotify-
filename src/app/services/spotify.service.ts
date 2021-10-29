@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from '../models/user.model';
-import { Artist } from '../models/artist.model';
+import { Artist, ArtistDTO } from '../models/artist.model';
 
 @Injectable({
   providedIn: 'root'
@@ -84,8 +84,10 @@ export class SpotifyService {
       'Content-Type' : 'application/json',
       'Authorization' : `Bearer ${this.token}`
     })
-  }).pipe(map(res => { return res.artists.items}));
+  }).pipe(map(res => { return res.artists.items.map(
+    (artistsDto: ArtistDTO) => new Artist(artistsDto))}));
   }
+
 }
 
 

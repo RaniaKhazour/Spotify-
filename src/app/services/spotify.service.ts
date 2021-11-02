@@ -61,6 +61,8 @@ export class SpotifyService {
     this.searchValue$.next(value);
   }
 
+  //fix repetition of headers
+
   //get user's profile 
   getUserInfo(token: string): Observable<User> {
     let userURL = `https://api.spotify.com/v1/me`;
@@ -76,7 +78,8 @@ export class SpotifyService {
 
   //get all artists
   getAllArtists(value: string): Observable<Artist[]> {
-    let artistURL = `https://api.spotify.com/v1/search?q=${value}&type=artist`;
+    let artistURL = `https://api.spotify.com/v1/search?q=${value}&type=artist&limit=30`;
+    //you can add a filter for the limit
 
     return this.httpClient.get<any>(artistURL, 
       { headers: new HttpHeaders({

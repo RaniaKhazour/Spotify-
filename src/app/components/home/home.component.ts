@@ -13,11 +13,15 @@ export class HomeComponent implements OnInit {
   token: string = '';
   user: any;
   artists: Artist[] = new Array();
+  now: Date = new Date();
+  time: number = 12;
 
   constructor(private spotifyService: SpotifyService, private router: Router,  private route: ActivatedRoute) { }
   
   
   ngOnInit(): void {
+    this.time = +this.now.toLocaleString('it-IT', { hour: 'numeric', hour12: false });
+
     this.token = this.route.snapshot.queryParams['token'];
 
     setTimeout(() => { 

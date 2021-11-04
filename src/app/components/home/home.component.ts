@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   artists: Artist[] = new Array();
   now: Date = new Date();
   time: number = 12;
+  dataArtist: object = {}; //object that contains all the data of an artist that has been clicked
+  //put it in the spotify service
 
   constructor(private spotifyService: SpotifyService, private router: Router,  private route: ActivatedRoute) { }
   
@@ -35,5 +37,18 @@ export class HomeComponent implements OnInit {
     });
 
     this.spotifyService.artists$.subscribe(results => this.artists = results);
+  }
+
+  artistData(artist: any) {
+    let data = {
+      id: artist.id,
+      image: artist.image,
+      name: artist.name,
+      genres: artist.genres,
+      followers: artist.followers.total | 0,
+    }
+    this.spotifyService.dataArtist$.next(data);
+    //create the object with the info that you need on details and insert it on dataArtist$, through the spotify service
+
   }
 }

@@ -28,6 +28,7 @@ export class SpotifyService {
   public logged$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public artists$: BehaviorSubject<Artist[]> = new BehaviorSubject<Artist[]>([]);
   public searchValue$: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  public dataArtist$: BehaviorSubject<object> = new BehaviorSubject<object>({});;
   currentSearch = this.searchValue$.asObservable();
 
 
